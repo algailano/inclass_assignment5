@@ -22,21 +22,52 @@ The steps of the algorithm are as follows:
 
 The base cases occur when the sublists are either empty or have one element, as these are inherently sorted. 
  '''
+import numbers
+import statistics
+from asyncore import read
 
+def partition(list, start, end):        #created partition for the quicksort function
+    place = start                          
 
-def quicksort(numbers_in_a_list):
+    for i in range(start, end):
+        if list[i] < list[end]:
+            list[i],list[place] = list[place],list[i]
+            place += 1
 
-#WRITE YOUR CODE HERE FOR THE RECURSIVE SORTING FUNCTION
+    list[place],list[end] = list[end],list[place] 
 
-    return #WHAT DOES IT RETURN?
+    return place
 
+def quicksort(list, start, end):
 
+#WRITE YOUR CODE HERE FOR THE RECURSIVE SORTING FUNCTION 
+   if start < end:                      
+        place = partition(list, start, end)
+        quicksort(list, start, place - 1)
+        quicksort(list, place + 1, end)
+        
 def main():
 
 # WRITE YOUR MAIN FUNCTION HERE TO READ IN YOUR numbers.txt FILE, RUN THE LIST THROUGH YOUR SORTING ALGORITHM, 
 # AND WRITE OUT YOUR FILE
 
-    return #WHAT DOES IT RETURN?
+    f = open('numbers.txt','r')
+    print()
+    g = f.read()
+    h = g.replace("[","")
+    i = h.replace("]","")
+    j = list(i.split(", "))
+    numList = [int(z) for z in j]
+    print("Original List:")
+    print(numList)
+    quicksort(numList, 0, len(numList) - 1)
+    print("Sorted List:")
+    print(numList)
+    x = open("sorted.txt", "w")
+    output = str(numList)
+    print(output)
+    
+    return x.write(output)
 
 
 if __name__ == "__main__":
